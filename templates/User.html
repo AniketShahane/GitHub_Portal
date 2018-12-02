@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Roboto+Condensed" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <title>GitHub | {{Title}}</title>
+  <style media="screen">
+    body {
+      background: #1e1e1e;
+    }
+
+    .flex-container {
+      display: flex;
+      justify-content: center;
+    }
+
+
+    .flex-container button {
+      flex: 1;
+    }
+
+    .flex-container input {
+      flex: 3;
+    }
+
+    #repositoriesWord {
+      text-align: left;
+    }
+
+    @media only screen and (max-width:779px) {
+      .Gitrepos {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .goback {
+        text-align: center;
+      }
+
+      #repositoriesWord {
+        text-align: center;
+      }
+
+      #bio {
+        text-align: center;
+      }
+    }
+
+    @media only screen and (min-width:780px) {
+      .Gitrepos {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .f1 {
+        display: flex;
+      }
+    }
+
+    .f1 .right {
+      flex: 3;
+    }
+
+    .f1 .left {
+      flex: 2;
+    }
+
+    .options {
+      flex: 4;
+      flex-basis: 30%;
+      margin: .4rem .4rem;
+      padding: 0.2rem;
+      color: #f4f4f4;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .repolink {
+      color: #f4f4f4;
+      transition: all 0.4s;
+    }
+
+    .repolink:hover {
+      cursor: pointer;
+      color: #1e1e1e;
+      background: #f4f4f4;
+      text-decoration: none;
+    }
+
+    #main-user {
+      color: #f4f4f4;
+      transition: all 0.4s;
+    }
+
+    #main-user:hover {
+      font-size: 4.8vh;
+      color: #f4f4f4;
+      text-decoration: none;
+    }
+
+    .backhome {
+      transition: all 0.4s;
+      color: #f4f4f4;
+      text-decoration: none;
+    }
+
+    .backhome:hover {
+      color: #1e1e1e;
+      background: #f4f4f4;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  {% if User %}
+  <div class="container text-center my-4 p-4" style="border: 2px solid #f4f4f4; border-radius: 2px; width: 90%; display: flex; flex-direction: column; justify-content: space-around;">
+    {% for user in User %}
+    <div class="header f1">
+      <!-- The header Conatins the avatar image, name and if of the user  -->
+      <!-- <h6 class="m-2" style="color: #f4f4f4; font-family: 'Roboto Condensed'; margin-left: auto;">{{user.id}}</h6> -->
+      <div class="left" style="display:flex; flex-direction: column; justify-content: center;">
+        <img src="{{user.avatar}}" alt="Avatar of The User" class="my-2 mx-auto" width="225" height="225" style="border: 2px solid #f4f4f4; border-radius: 50%; padding: 0.4rem;">
+        <a href="{{user.page}}" target="_blank" id="main-user" style="color: #f4f4f4; font-family: 'Kaushan Script'; font-size: 3.4vh; float: left;" class="my-2 py-2">
+          <span style="color: #f4f4f4;font-size: 2.5vh;"><i class="fab fa-github" style="border: 2px solid #f4f4f4; border-radius: 50%; padding:0.2rem;"></i></span> {{user.login}}
+        </a>
+      </div>
+
+      <div class="right" style="display: flex; flex-direction: column; justify-content: center;">
+        <p style="font-family:'Roboto Condensed', sans-serif; color:#f4f4f4; font-size: 2.8vh; width: 95%;" id="bio">{{user.bio}}</p>
+      </div>
+    </div>
+    <hr style="color: white; border: 1px solid white; width: 95%;">
+    {% endfor %}
+    <div class=" repositories text-center">
+      <!-- The repositories contains the name of the repositories and thats is  -->
+      <h4 id="repositoriesWord" style="color: #f4f4f4; font-family: 'Roboto Condensed'; font-size: 3.4vh;" class="m-2"><i class="far fa-folder mr-2"></i>Repositories</h4>
+      {% if Repo %}
+      <div class="Gitrepos">
+        {% for r in Repo %}
+
+        <a href="{{r.url}}" class="repolink p-2 options" target="_blank" style="font-size: 2.2vh ;font-family: 'Roboto Condensed';border: 1px solid #f4f4f4; border-radius: 4px;">
+          {{r.name}}
+        </a>
+
+        {% endfor %}
+      </div>
+      {% else %}
+      <h4 style="color: #f4f4f4; font-family: 'Roboto Condensed'; font-size: 4vh; text-align: center; margin: top: 2rem;" class="m-2">No Repositories Yet</h4>
+      {% endif %}
+    </div>
+    {% else %}
+    <div class="container my-4 p-4 goback" style="border: 2px solid #f4f4f4; border-radius: 2px; width: 90%">
+      <h2 style="color: #f4f4f4; font-family: 'Kaushan Script'; font-size: 4vh" class="text-center m-4">{{message}}</h2>
+    </div>
+    {% endif %}
+  </div>
+  <div class="container text-right p-0" style="width: 90%;">
+    <a href="{% url 'home' %}" class="p-2 backhome" style="font-family: 'Roboto Condensed'; font-size: 4vh; border: 2px solid #f4f4f4; border-radius: 4px;">Go Back <i class="far fa-arrow-alt-circle-left ml-2"></i></a>
+  </div>
+</body>
+
+</html>
